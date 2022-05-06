@@ -15,61 +15,104 @@ public class ActionManager
     //variables
     Dictionary<string, Actions> allActions = new Dictionary<string, Actions>();
 
-    public void AddAction(string key, Action action)
-    {
-        try{
-            allActions[key].AddAction(action);
-        }
-        catch (KeyNotFoundException){
-            allActions[key] = new Actions();
-            AddAction(key, action);
-        }
-        catch (Exception e) {
-            Debug.LogWarning("Exeption " + e + " thrown when addAction(" + key + ", " + action + ") was called!");
-        }
-    }
-
-    public void RunActions(string key) {
-        try
-        {
-            allActions[key].RunAll();
-        }
-        catch (Exception e){
-            Debug.LogWarning("Exeption " + e + " thrown when runActions(" + key + ") was called!");
-        }
-    }
-
-    public void ClearActions(string key)
+    public void AddAction(string trigger, string key, Action action)
     {
         try
         {
-            allActions[key].ClearAll();
+            allActions[trigger].AddAction(key, action);
+        }
+        catch (KeyNotFoundException)
+        {
+            allActions[trigger] = new Actions();
+            AddAction(trigger, key, action);
         }
         catch (Exception e)
         {
-            Debug.LogWarning("Exeption " + e + " thrown when clearActions(" + key + ") was called!");
+            Debug.LogWarning("Exeption " + e + " thrown when addAction(" + trigger + ", " + key + ", " + action + ") was called!");
+        }
+    }
+
+    public void AddAction(string trigger, Action action)
+    {   
+        try{
+            allActions[trigger].AddAction(action);
+        }
+        catch (KeyNotFoundException){
+            allActions[trigger] = new Actions();
+            AddAction(trigger, action);
+        }
+        catch (Exception e) {
+            Debug.LogWarning("Exeption " + e + " thrown when addAction(" + trigger + ", " + action + ") was called!");
+        }
+    }
+
+    public void RunActions(string trigger) {
+        try
+        {
+            allActions[trigger].RunAll();
+        }
+        catch (Exception e){
+            Debug.LogWarning("Exeption " + e + " thrown when runActions(" + trigger + ") was called!");
+        }
+    }
+
+    public void RunAction(string trigger, string key) {
+        try
+        {
+            allActions[trigger].GetAction(key)();
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Exeption " + e + " thrown when runActions(" + trigger + ", " + key + ") was called!");
+        }
+    }
+
+    public void ClearActions(string trigger)
+    {
+        try
+        {
+            allActions[trigger].ClearAll();
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("Exeption " + e + " thrown when clearActions(" + trigger + ") was called!");
         }
     }
 }
 
 public class Actions
 {
-    private LinkedList<Action> actions = new LinkedList<Action>();
+    private Dictionary<string, Action> actions = new Dictionary<string, Action>();
 
-    public void AddAction(Action action)
+    public void AddAction(string name, Action action)
     {
         //WARNING unprotected input!!
-        actions.AddLast(action);
+        actions.Add(name, action);
     }
 
-    public void ClearAll()
-    {
+    public void AddAction(Action action) {
+        AddAction(actions.Count.ToString(), action);
+    }
+
+    public void RemoveAction(string key) {
+        actions.Remove(key);
+    }
+
+    public Dictionary<string, Action> GetAllActions() {
+        return actions;
+    }
+
+    public Action GetAction(string key) {
+        return actions[key];
+    }
+
+    public void ClearAll(){
         actions.Clear();
     }
 
     public void RunAll()
     {
-        foreach (Action action in actions)
+        foreach (Action action in actions.Values)
             action();
     }
 }
