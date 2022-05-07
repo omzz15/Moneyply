@@ -5,10 +5,10 @@ using UnityEngine;
 public class ActionManager
 {
     //common actions
-    public static readonly string k_OnGameActivate = "on game activate";
-    public static readonly string k_WhileGameActive = "while game active";
-    public static readonly string k_OnGameDeactivate = "on game deactivate";
-    public static readonly string k_WhileGameDeactive = "while game deactive";
+    public static readonly string k_OnAppOpen = "on app open";
+    public static readonly string k_OnAppClose = "on app close";
+    //these action are tied to objects with GameController
+    public static readonly string k_OnAwake = "on awake";
     public static readonly string k_OnStart = "on start";
     public static readonly string k_OnUpdate = "on update";
 
