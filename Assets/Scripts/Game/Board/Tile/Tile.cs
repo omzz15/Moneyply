@@ -5,13 +5,19 @@ using UnityEngine;
 /**
  * data class that stores information for tiles
  */
-public class Tile
+public abstract class Tile
 {
+    public readonly string name;
     public readonly TileType type;
 
-    public Tile(TileType type) {
+    public Tile(string name, TileType type) {
+        this.name = name;
         this.type = type;
     }
+
+    public abstract void OnLand(Player player);
+
+    public abstract List<PlayAction> getActions(Game game);
 }
 
 public enum TileType { 
