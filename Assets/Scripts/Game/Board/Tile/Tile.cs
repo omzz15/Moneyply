@@ -15,9 +15,9 @@ public abstract class Tile
         this.type = type;
     }
 
-    public abstract void OnLand(Player player);
+    public abstract void OnLand(Game game);
 
-    public abstract List<PlayAction> getActions(Game game);
+    public virtual void OnPass(Game game) { }
 }
 
 public enum TileType { 

@@ -29,4 +29,6 @@ public abstract class OwnableTile : Tile
         
         actions.Add()
     }
+
+    public abstract int getRent();
 }
