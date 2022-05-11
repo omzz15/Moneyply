@@ -14,7 +14,7 @@ public class PropertyTile : OwnableTile
     public readonly Color color;
     
 
-    public PropertyTile(Player player, int cost, int houseCost, int hotelCost, int morgageCost, int unmorgageCost, int houses, int[] rents, Color color) : base(TileType.PROPERTY, player, cost, morgageCost, unmorgageCost)
+    public PropertyTile(string name, Player player, int cost, int houseCost, int hotelCost, int morgageCost, int unmorgageCost, int houses, int[] rents, Color color) : base(name, TileType.PROPERTY, player, cost, morgageCost, unmorgageCost)
     {
         this.houseCost = houseCost;
         this.hotelCost = hotelCost;
@@ -36,21 +36,38 @@ public class PropertyTile : OwnableTile
     public bool isHotel() {
         return houses == rents.Length - 1;
     }
-
-    //TODO fix add house and get rent to refrence player 
-    public bool AddHouse() {
-        if(houses == rents.Length - 1)
-            return false;
-        houses++;
-        return true;
+ 
+    public void AddStructure() {
+        if(Player == null) throw new TileNotOwnedException();
+        
+        if (canAddHouse()) { 
+            Player.takeMoney(houseCost);
+            houses++;
+            return;
+        }
+        if (canAddHotel()) {
+            Player.takeMoney(hotelCost);
+            houses++;
+        }
     }
 
-    public int getRent() {
+    public void RemoveStructure() { 
+        if(Player == null) throw new TileNotOwnedException();
+
+        if (isHotel()){
+            Player.addMoney(hotelCost);
+            houses--;
+            return;
+        }
+        if (houses > 0) {
+            Player.addMoney(houseCost);
+            houses--;
+            return;
+        }
+        throw new NoHouseOnTileException();
+    }
+
+    override public int CalculateRent(Game game) {
         return rents[houses];
-    }
-
-    public void onLand(Player player)
-    {
-
     }
 }

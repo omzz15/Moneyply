@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 public class Player
 {
-    private Dictionary<TileType, LinkedList<Tile>> tiles = new Dictionary<TileType, LinkedList<Tile>>();
     private int money;
     private int location;
 
@@ -15,10 +12,13 @@ public class Player
     }
 
     public bool canGetTile(OwnableTile tile) {
-        return (hasMoney(tile.cost) && tile.Player == null);
+        return (hasMoney(tile.cost) && !tile.IsOwned());
     }
 
     public void addTile(OwnableTile tile) {
+        //not sure if this is nesseary
+        if (tile.IsOwned()) throw new TileOwnedException();
+
         takeMoney(tile.cost);
         tile.Player = this;
     }
@@ -31,16 +31,11 @@ public class Player
 
     public virtual bool hasMoney(int amount)
     {
-        return (money - amount < 0);
+        return (money - amount >= 0);
     }
 
-    public virtual bool takeMoney(int amount) {
-        if (hasMoney(amount)) {
-            //TODO add logic
-            return false;
-        }
-
+    public virtual void takeMoney(int amount) {
+        if (!hasMoney(amount)) throw new NotEnoughMoneyException();
         money -= amount;
-        return true;
     }
 }

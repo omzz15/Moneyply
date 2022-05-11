@@ -26,6 +26,7 @@ public enum TileType {
     UTILITY,
     TAX,
     PAYCHECK,
+    GO,
     COMMUNITY_CHEST,
     CHANCE,
     START

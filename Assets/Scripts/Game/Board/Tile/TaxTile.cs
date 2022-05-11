@@ -6,13 +6,13 @@ public class TaxTile : Tile
 {
     public readonly int amount;
 
-    TaxTile(int amount) : base(TileType.TAX) {
+    TaxTile(string name, int amount) : base(name, TileType.TAX) {
         this.amount = amount;
     }
 
     //TODO add method to take moeny
-    override public void OnLand(Player player)
+    override public void OnLand(Game game)
     {
-        player.takeMoney(amount);
+        game.CurrentPLayer.takeMoney(amount);
     }
 }

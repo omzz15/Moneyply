@@ -6,14 +6,16 @@ public class RailroadTile : OwnableTile
 {
     public readonly int[] rents;
 
-    public RailroadTile(Player player, int cost, int morgageCost, int unmorgageCost, int[] rents) : base(TileType.RAILROAD, player, cost, morgageCost, unmorgageCost)
+    public RailroadTile(string name, Player player, int cost, int morgageCost, int unmorgageCost, int[] rents) : base(name, TileType.RAILROAD, player, cost, morgageCost, unmorgageCost)
     {
         this.rents = rents;
     }
 
-    //TODO get railroads for player and get rent
-    public void onLand(Player player)
+    //TODO get railroads for player
+    public override int CalculateRent(Game game)
     {
+        int railroads = 1;
 
+        return rents[railroads - 1];
     }
 }

@@ -6,13 +6,32 @@ public class PaycheckTile : Tile
 {
     public readonly int amount;
 
-    public PaycheckTile(int amount) : base(TileType.PAYCHECK)
+    public PaycheckTile(string name, int amount) : base(name, TileType.PAYCHECK)
     {
         this.amount = amount;
     }
 
-    //TODO add a method to give player money
-    override public void OnLand(Player player) {
-        player.addMoney(amount);
+    override public void OnLand(Game game) {
+        game.CurrentPLayer.addMoney(amount);
+    }
+}
+
+public class GoTile : Tile
+{
+    public readonly int amount;
+
+    public GoTile(string name, int amount) : base(name, TileType.GO)
+    {
+        this.amount = amount;
+    }
+
+    override public void OnLand(Game game)
+    {
+        game.CurrentPLayer.addMoney(amount);
+    }
+
+    public override void OnPass(Game game)
+    {
+        game.CurrentPLayer.addMoney(amount);
     }
 }
