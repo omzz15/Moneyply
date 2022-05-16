@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 public class Board
 {
@@ -14,6 +10,14 @@ public class Board
     }
 
     public Tile GetTile(Player player) {
-        return tiles[player.Location];
+        return GetTile(player.Location);
+    }
+
+    public Tile GetTile(int location) {
+        return tiles[location];
+    }
+
+    public int GetTileLength() {
+        return tiles.Length;
     }
 }

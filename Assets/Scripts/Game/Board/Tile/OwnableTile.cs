@@ -77,8 +77,11 @@ public abstract class OwnableTile : Tile
 
     public override void OnLand(Game game)
     {
-        int rent = GetRent(game);
-        game.CurrentPLayer.takeMoney(rent);
-        Player.addMoney(rent);
+        if (((OwnableTile)game.CurrentTile).IsOwned()){
+            game.AddPlayAction(new PayAction());
+            return;
+        }
+        game.AddPlayAction(new BuyAction());
+        game.AddPlayAction(new AuctionAction());
     }
 }

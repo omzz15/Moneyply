@@ -13,6 +13,7 @@ public class PaycheckTile : Tile
 
     override public void OnLand(Game game) {
         game.CurrentPLayer.addMoney(amount);
+        game.AddPlayAction(new NoneAction());
     }
 }
 
@@ -28,6 +29,7 @@ public class GoTile : Tile
     override public void OnLand(Game game)
     {
         game.CurrentPLayer.addMoney(amount);
+        game.AddPlayAction(new NoneAction());
     }
 
     public override void OnPass(Game game)
