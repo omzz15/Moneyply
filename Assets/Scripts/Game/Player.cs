@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 
 public class Player
 {
@@ -41,9 +41,13 @@ public class Player
 }
 
 public class PlayerData{
+    public int money;
+    public int location;
+    public ArrayList<Tile> tiles = new ArrayList();
     
+    public PlayerData(int money, int location, ArrayList<> tiles){
+        this.money = money;
+        this.location = location;
+        this.tiles = tiles;
+    }
 }
-
-Player p = new Player(1000);
-p.takeMoney(10000);
-Debug.Log("test");
