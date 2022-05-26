@@ -39,3 +39,11 @@ public class Player
         money -= amount;
     }
 }
+
+public class PlayerData{
+    
+}
+
+Player p = new Player(1000);
+p.takeMoney(10000);
+Debug.Log("test");
