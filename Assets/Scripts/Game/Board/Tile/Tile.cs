@@ -15,7 +15,7 @@ public abstract class Tile
         this.type = type;
     }
 
-    public abstract void OnLand(Game game);
+    public virtual void OnLand(Game game) { }
 
     public virtual void OnPass(Game game) { }
 }
@@ -29,5 +29,6 @@ public enum TileType {
     GO,
     COMMUNITY_CHEST,
     CHANCE,
-    START
+    START,
+    NONE
 }

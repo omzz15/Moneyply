@@ -58,47 +58,6 @@ public class PayAction : PlayAction
     }
 }
 
-public abstract class Give {
-    private Player from;
-    private Player to;
-
-    public Player FromPlayer { get => from; }
-    public Player ToPlayer { get => to; }
-
-    public GiveAction(Player from, Player to) {
-        this.from = from;
-        this.to = to;
-    }
-
-    public abstract void Act(Game game);
-}
-
-public class GiveMoney : Give
-{
-    private int amount;
-    public GiveMoney(Player from, Player to, int amount) : base(from, to){
-        this.amount = amount;
-    }
-    public override void Act(Game game)
-    {
-        FromPlayer.takeMoney(amount);
-        ToPlayer.addMoney(amount);
-    }
-}
-
-public class TradeAction : PlayAction
-{
-    private Give to;
-    private Give from;
-
-    public TradeAction(Give)
-
-    public void Act(Game game)
-    {
-        
-    }
-}
-
 public class NoneAction : PlayAction {
     public void Act(Game game) { }
 }

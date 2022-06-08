@@ -1,14 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
 
 public class Player
 {
-    private int money;
-    private int location;
+    private PlayerData data;
 
-    public int Location { get => location; set => location = value; }
+    public int Location { get => data.location; set => data.location = value; }
 
     public Player(int money) {
-        this.money = money;
+        data.money = money;
     }
 
     public bool canGetTile(OwnableTile tile) {
@@ -26,28 +26,40 @@ public class Player
     public void addMoney(int amount)
     {
         //WARNING unprotected input
-        money += amount;
+        data.money += amount;
     }
 
     public virtual bool hasMoney(int amount)
     {
-        return (money - amount >= 0);
+        return (data.money - amount >= 0);
     }
 
     public virtual void takeMoney(int amount) {
         if (!hasMoney(amount)) throw new NotEnoughMoneyException();
-        money -= amount;
+        data.money -= amount;
     }
 }
 
-public class PlayerData{
+public interface Clone<T> {
+    T CreateDeepCopy();
+}
+
+public class PlayerData : Clone<PlayerData>
+{
     public int money;
     public int location;
-    public ArrayList<Tile> tiles = new ArrayList();
-    
-    public PlayerData(int money, int location, ArrayList<> tiles){
+    public ArrayList tiles = new ArrayList();
+
+    public PlayerData(int money, int location, ArrayList tiles){
         this.money = money;
         this.location = location;
         this.tiles = tiles;
+    }
+
+    public PlayerData CreateDeepCopy()
+    {
+        PlayerData copy = (PlayerData)MemberwiseClone();
+        copy.tiles = (ArrayList)tiles.Clone();
+        return copy;
     }
 }
